@@ -1,0 +1,36 @@
+{
+  "name": "inquirer-input-up",
+  "version": "1.0.0",
+  "description": "The inquirer input prompt plus up-arrow fills in default value.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "inquirer",
+    "input",
+    "up",
+    "arrow",
+    "default",
+    "last",
+    "command",
+    "prompt"
+  ],
+  "author": "Michael Keller",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "cli-cursor": "^1.0.2"
+  },
+  "devDependencies": {
+    "inquirer": "^1.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhkeller/inquirer-input-up.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mhkeller/inquirer-input-up/issues"
+  },
+  "homepage": "https://github.com/mhkeller/inquirer-input-up#readme"
+}
