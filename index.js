@@ -40,6 +40,7 @@ Prompt.prototype._run = function (cb) {
   validation.success.forEach(this.onEnd.bind(this));
   validation.error.forEach(this.onError.bind(this));
 
+  events.normalizedUpKey.takeUntil(validation.success).forEach(this.onKeyUp.bind(this));
   events.keypress.takeUntil(validation.success).forEach(this.onKeypress.bind(this));
 
   // Init
@@ -53,7 +54,7 @@ Prompt.prototype._run = function (cb) {
  * @return {Prompt} self
  */
 
-Prompt.prototype.render = function (error, cursorPos) {
+Prompt.prototype.render = function (error, answer) {
   var bottomContent = '';
   var message = this.getQuestion();
 
@@ -68,13 +69,15 @@ Prompt.prototype.render = function (error, cursorPos) {
   }
 
   this.screen.render(message, bottomContent);
-  // if (cursorPos) {
-  //   this.rl.output.unmute()
-  //   utils.right(this.rl, this.rl._getCursorPos())
-  //   this.rl.output.mute()
-  //   // console.log(this.rl._getCursorPos().cols)
-  //   // console.log(this.rl)
-  // }
+
+  if (answer) {
+    this.rl.write(answer);
+
+    // OR
+
+    // this.rl.line = answer;
+    // this.rl.write(null, {ctrl: true, name: 'e'});
+  }
 
 };
 
@@ -108,7 +111,7 @@ Prompt.prototype.onError = function (state) {
  * When user press a key
  */
 
-Prompt.prototype.onKeypress = function (e) {
+Prompt.prototype.onKeyUp = function (e) {
   var dflt
   var keyName
   var cursorPos
@@ -116,17 +119,10 @@ Prompt.prototype.onKeypress = function (e) {
 
   if (this.opt.default) {
     dflt = (typeof this.opt.default === 'function') ? this.opt.default() : this.opt.default;
-    keyName = (e.key && e.key.name);
-
-    // On up arrow, set the line to the default field
-    if (keyName == 'up') {
-      this.rl.line = dflt;
-    //   cursorPos = this.rl.line.length
-    //   // fullWidth = this.rl._getCursorPos().cols + dflt.length + 1
-    //   // currentPos = this.rl._getCursorPos().cols + dflt.length
-    }
-
   }
-  this.render(null, cursorPos);
+  this.render(null, dflt);
 
+};
+Prompt.prototype.onKeypress = function () {
+  this.render();
 };
