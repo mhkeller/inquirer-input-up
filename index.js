@@ -71,12 +71,8 @@ Prompt.prototype.render = function (error, answer) {
   this.screen.render(message, bottomContent);
 
   if (answer) {
-    this.rl.write(answer);
-
-    // OR
-
-    // this.rl.line = answer;
-    // this.rl.write(null, {ctrl: true, name: 'e'});
+    this.rl.line = answer;
+    this.rl.write(null, {ctrl: true, name: 'e'});
   }
 
 };
