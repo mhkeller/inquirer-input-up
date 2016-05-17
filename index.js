@@ -40,7 +40,6 @@ Prompt.prototype._run = function (cb) {
   validation.success.forEach(this.onEnd.bind(this));
   validation.error.forEach(this.onError.bind(this));
 
-  events.normalizedUpKey.takeUntil(validation.success).forEach(this.onKeyUp.bind(this));
   events.keypress.takeUntil(validation.success).forEach(this.onKeypress.bind(this));
 
   // Init
@@ -69,12 +68,6 @@ Prompt.prototype.render = function (error, answer) {
   }
 
   this.screen.render(message, bottomContent);
-
-  if (answer) {
-    this.rl.line = answer;
-    this.rl.write(null, {ctrl: true, name: 'e'});
-  }
-
 };
 
 /**
@@ -106,19 +99,18 @@ Prompt.prototype.onError = function (state) {
 /**
  * When user press a key
  */
+Prompt.prototype.onKeypress = function (e) {
+  if (e.key.name == 'up') {
+    var dflt
+    var keyName
+    var cursorPos
+    var fullWidth
 
-Prompt.prototype.onKeyUp = function (e) {
-  var dflt
-  var keyName
-  var cursorPos
-  var fullWidth
-
-  if (this.opt.default) {
-    dflt = (typeof this.opt.default === 'function') ? this.opt.default() : this.opt.default;
+    if (this.opt.default) {
+      dflt = (typeof this.opt.default === 'function') ? this.opt.default() : this.opt.default;
+    }
+    this.rl.line = dflt;
+    this.rl.write(null, {ctrl: true, name: 'e'});
   }
-  this.render(null, dflt);
-
-};
-Prompt.prototype.onKeypress = function () {
   this.render();
 };
