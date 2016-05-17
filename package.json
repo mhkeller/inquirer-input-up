@@ -1,6 +1,6 @@
 {
   "name": "inquirer-input-up",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The inquirer input prompt plus up-arrow fills in default value.",
   "main": "index.js",
   "scripts": {
