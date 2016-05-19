@@ -101,7 +101,7 @@ Prompt.prototype.onError = function (state) {
  */
 Prompt.prototype.onKeypress = function (e) {
   if (e.key.name == 'up') {
-    var dflt
+    var dflt = ''
     var keyName
     var cursorPos
     var fullWidth
